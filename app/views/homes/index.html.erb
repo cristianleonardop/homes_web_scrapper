@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+<p id="alert"><%= alert %></p>
+
+<h1>Homes</h1>
+
+<%= "Scraping to #{@scrap_url}" %>
+
+<%= form_with url: spider_homes_path, method: :post do |form| %>
+    <%= form.text_field :query, value: @scrap_url, size: 100 %>
+  <%= form.submit "Scrape from page" %>
+<% end %>
+
+<td><%= link_to 'Download csv', homes_path(format: :csv) %></td>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Address</th>
+      <th>Monthly rent</th>
+      <th>Url</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @homes.each do |home| %>
+      <tr>
+        <td><%= home.title %></td>
+        <td><%= home.address %></td>
+        <td><%= home.monthly_rent %></td>
+        <td><%= link_to home.url, home.url %>
+        <td><%= link_to 'Show', home %></td>
+        <td><%= link_to 'Edit', edit_home_path(home) %></td>
+        <td><%= link_to 'Destroy', home, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
